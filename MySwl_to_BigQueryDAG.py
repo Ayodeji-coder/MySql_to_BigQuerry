@@ -79,8 +79,8 @@ with incremental_dag:
     extract_mysql_data = MySqlOperator(
         task_id='extract_data',
         sql="SELECT * FROM employees WHERE DATE(hire_date) = '{{ ds }}'",
-        mysql_conn_id='mysql_conn_id',  # Add your MySQL connection ID
-        database='Employees',  # Add your MySQL database name
+        mysql_conn_id='mysql_conn_id', 
+        database='Employees',  
     )
 
     # Transform data using SQL for incremental load process
@@ -94,7 +94,7 @@ with incremental_dag:
     # Load transformed data into BigQuery (using WRITE_APPEND for incremental load)
     load_bigquery_data = BigQueryOperator(
         task_id='load_bigquery_data',
-        sql=transform_data_incremental.sql,  # Reuse the SQL from the transformation step
+        sql=transform_data_incremental.sql,  
         destination_dataset_table='dejid.dataset.employees',  
         write_disposition='WRITE_APPEND',  
         bigquery_conn_id='bigquery_conn_id',  
